@@ -4,7 +4,7 @@ var computerScore = 0;
 var playerChoice = "none";
 var computerChoice = "none";
 
-// create function to get computer choice
+// this function gets a random number and assigns a value from 3 possible outcomes, with initial value set to "none"
 function getComputerChoice() {
     let computerSelection = Math.random();
     // declare and initiate computer choice to "none"
@@ -20,9 +20,7 @@ function getComputerChoice() {
     return compChoice;
 }
 
-/*
-create function playRound that takes parameters playerChoice and computerChoice
-*/
+// this function plays each round, starting by prompting player for choice, running function to get computer choice, comparing, and then resetting the choices back to "none" for the next round
 function playRound(p,c) {
     while (p === "none") {
         // prompt user for player choice
