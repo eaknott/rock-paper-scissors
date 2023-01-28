@@ -72,10 +72,11 @@ function playRound(p,c) {
 }
 
 function game() {
-    // run playRound 5 times
-    for (i = 0; i < 5; i++) {
+    // run playRound
+    while (computerScore < 5 && playerScore < 5) {
         playRound(playerChoice, computerChoice);
     }
+    
     // at the end of 5 rounds, print the scores to console
     console.log(`Computer Score: ${computerScore}, Player Score: ${playerScore}`);
     // compare the score numbers and alert the winner
