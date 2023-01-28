@@ -94,4 +94,3 @@ function game() {
 // Start the game when web page opens
 alert("Let's Play!");
 alert("Rock, Paper, or Scissors? Best of Five Rounds!");
-game();
