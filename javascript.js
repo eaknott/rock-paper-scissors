@@ -4,6 +4,11 @@ var computerScore = 0;
 var playerChoice = "none";
 var computerChoice = "none";
 
+const buttons = document.querySelector('#selections');
+const rock = document.querySelector('.rock');
+const paper = document.querySelector('.paper');
+const scissors = document.querySelector('.scissors');
+
 // this function gets a random number and assigns a value from 3 possible outcomes, with initial value set to "none"
 function getComputerChoice() {
     let computerSelection = Math.random();
