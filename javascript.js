@@ -21,12 +21,11 @@ function getComputerChoice() {
 
 // this function plays each round, starting by prompting player for choice, running function to get computer choice, comparing, and then resetting the choices back to "none" for the next round
 function playRound(p,c) {
-    while (playerScore < 5 && computerScore < 5) {
         // run function to get computerChoice
         c = getComputerChoice();
-        // print each round's choices to the console
-        let printOut = `Computer: ${c}, Player: ${p}`;
-        console.log(printOut);
+        // print each round's choices to the window
+        printOut.textContent = `Computer: ${c}, Player: ${p}`;
+        
         /* 
         check for each possible combination, and alert a tailored message, and update the appropriate score
         */
@@ -53,42 +52,84 @@ function playRound(p,c) {
         }
         // reset player choice to "none" for the next round
         p = "none";
-    }
+}
+
+function resetGame() {
+    const resetBtn = document.createElement('button');
+    resetBtn.classList.add('resetBtn');
+    resetBtn.textContent = "Reset Game";
+
+    body.appendChild(resetBtn);
+    resetBtn.addEventListener('click', () => {
+        playerScore = 0;
+        computerScore = 0;
+        announceWinner.textContent = "";
+        runningScore.textContent = `Computer: ${computerScore}, Player: ${playerScore}`;
+        body.removeChild(resetBtn);
+        body.removeChild(printOut);
+    });
 }
 
 function game() {
     // run playRound
-    while (computerScore < 5 && playerScore < 5) {
+    if (computerScore < 5 && playerScore < 5) {
         playRound(playerChoice, computerChoice);
     }
-    
-    // at the end of 5 rounds, print the scores to console
-    console.log(`Computer Score: ${computerScore}, Player Score: ${playerScore}`);
+
     // compare the score numbers and alert the winner
     if (computerScore > playerScore) {
-        alert("Computer wins!");
+        runningScore.textContent = `Computer: ${computerScore}, Player: ${playerScore}`;
     } else if (playerScore > computerScore) {
-        alert("You win!");
+        runningScore.textContent = `Computer: ${computerScore}, Player: ${playerScore}`;
     } else {
-        alert("It's a tie!");
+        runningScore.textContent = `Computer: ${computerScore}, Player: ${playerScore}`;
     }
-    // reset scores to 0
-    playerScore = 0;
-    computerScore = 0;
+
 }
 
 // Start the game when web page opens
 alert("Let's Play!");
 
 
-const buttons = document.querySelector('#selections');
-const rock = document.querySelector('.rock');
-const paper = document.querySelector('.paper');
-const scissors = document.querySelector('.scissors');
+const buttons = document.querySelectorAll('button');
+const body = document.querySelector('body');
+var printOut = document.createElement('div');
+printOut.classList.add('results');
+printOut.textContent = '';
+body.appendChild(printOut);
 
-// add event listener for each button and update playerChoice
-buttons.addEventListener('click', function (e) {
-    playerChoice = e.target.className;
-    console.log(playerChoice);
-    playRound(playerChoice, computerChoice);
+
+var runningScore = document.createElement('div');
+runningScore.classList.add('runningScore');
+runningScore.textContent = 
+    `Computer: ${computerScore}, Player: ${playerScore}`;
+body.appendChild(runningScore);
+
+var announceWinner = document.createElement('div');
+announceWinner.classList.add('announceWinner');
+announceWinner.textContent = "";
+body.appendChild(announceWinner);
+
+// add event listener for each button and update playerChoice 
+// according to button clicked
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playerChoice = button.className;
+        console.log(playerChoice);
+        game();    
+    });
+});
+
+window.addEventListener("click", () => {
+    if (playerScore > 4 || computerScore > 4) {
+        if (computerScore > playerScore) {
+            announceWinner.textContent = "Computer wins!";
+        } else if (computerScore < playerScore) {
+            announceWinner.textContent = "You win!";
+        } else {
+            announceWinner.textContent = "It's a TIE!";
+        }
+        
+        resetGame();
+    }
 });
