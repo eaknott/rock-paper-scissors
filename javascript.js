@@ -4,25 +4,29 @@ var computerScore = 0;
 var playerChoice = "none";
 var computerChoice = "none";
 
+// get variables of buttons and body from html
 const buttons = document.querySelectorAll('button');
 const body = document.querySelector('body');
-var printOut = document.createElement('div');
+
+// this div is to display each player's choice each round
+const printOut = document.createElement('div');
 printOut.classList.add('results');
 printOut.textContent = '';
 body.appendChild(printOut);
 
-
-var runningScore = document.createElement('div');
+// this div is for running score during a game
+const runningScore = document.createElement('div');
 runningScore.classList.add('runningScore');
 runningScore.textContent = 
     `Computer: ${computerScore}, Player: ${playerScore}`;
 body.appendChild(runningScore);
 
-var announceWinner = document.createElement('div');
+// this div is for announcing the winner of each game
+const announceWinner = document.createElement('div');
 announceWinner.classList.add('announceWinner');
 announceWinner.textContent = "";
 body.appendChild(announceWinner);
-
+        
 // this function gets a random number and assigns a value from 3 possible outcomes, with initial value set to "none"
 function getComputerChoice() {
     let computerSelection = Math.random();
@@ -45,13 +49,13 @@ function playRound(p,c) {
         c = getComputerChoice();
         // print each round's choices to the window
         printOut.textContent = `Computer: ${c}, Player: ${p}`;
-
+        
         // create div to display message for each round
-        var message = document.createElement('div');
+        const message = document.createElement('div');
         message.classList.add('message');
         message.textContent = "";
         printOut.appendChild(message);
-        
+
         /* 
         check for each possible combination, and alert a tailored message, and update the appropriate score
         */
@@ -80,13 +84,15 @@ function playRound(p,c) {
         p = "none";
 }
 
+// this function resets the game to play again
 function resetGame() {
+    // create button for reset and append to html body
     const resetBtn = document.createElement('button');
     resetBtn.classList.add('resetBtn');
     resetBtn.textContent = "Reset Game";
-
     body.appendChild(resetBtn);
     
+    // add event listener to reset scores and div.textContent's
     resetBtn.addEventListener('click', () => {
         playerScore = 0;
         computerScore = 0;
@@ -97,8 +103,9 @@ function resetGame() {
     });
 }
 
+// this function starts a game, calling playRound until a player reaches 5 points
 function game() {
-    // run playRound
+    // call playRound
     if (computerScore < 5 && playerScore < 5) {
         playRound(playerChoice, computerChoice);
     }
@@ -127,6 +134,7 @@ buttons.forEach((button) => {
     });
 });
 
+// add event listener to announce winner and show reset button
 window.addEventListener("click", () => {
     if (playerScore > 4 || computerScore > 4) {
         if (computerScore > playerScore) {
