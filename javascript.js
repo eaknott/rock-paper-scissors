@@ -3,6 +3,26 @@ var playerScore = 0;
 var computerScore = 0;
 var playerChoice = "none";
 var computerChoice = "none";
+
+const buttons = document.querySelectorAll('button');
+const body = document.querySelector('body');
+var printOut = document.createElement('div');
+printOut.classList.add('results');
+printOut.textContent = '';
+body.appendChild(printOut);
+
+
+var runningScore = document.createElement('div');
+runningScore.classList.add('runningScore');
+runningScore.textContent = 
+    `Computer: ${computerScore}, Player: ${playerScore}`;
+body.appendChild(runningScore);
+
+var announceWinner = document.createElement('div');
+announceWinner.classList.add('announceWinner');
+announceWinner.textContent = "";
+body.appendChild(announceWinner);
+
 // this function gets a random number and assigns a value from 3 possible outcomes, with initial value set to "none"
 function getComputerChoice() {
     let computerSelection = Math.random();
@@ -25,30 +45,36 @@ function playRound(p,c) {
         c = getComputerChoice();
         // print each round's choices to the window
         printOut.textContent = `Computer: ${c}, Player: ${p}`;
+
+        // create div to display message for each round
+        var message = document.createElement('div');
+        message.classList.add('message');
+        message.textContent = "";
+        printOut.appendChild(message);
         
         /* 
         check for each possible combination, and alert a tailored message, and update the appropriate score
         */
         if (p === "rock" && c === "paper") {
-            alert("You lose! Paper beats rock");
+            message.textContent = "You lose! Paper beats rock";
             computerScore++;
         } else if (p === "rock" && c === "scissors") {
-            alert("You win! Rock beats scissors");
+            message.textContent = "You win! Rock beats scissors";
             playerScore++;
         } else if (p === "paper" && c === "rock") {
-            alert("You win! Paper beats rock");
+            message.textContent = "You win! Paper beats rock";
             playerScore++;
         } else if (p === "paper" && c === "scissors") {
-            alert("You lose! Scissors beats paper");
+            message.textContent = "You lose! Scissors beats paper";
             computerScore++;
         } else if (p === "scissors" && c === "rock") {
-            alert("You lose! Rock beats scissors");
+            message.textContent = "You lose! Rock beats scissors";
             computerScore++;
         } else if (p === "scissors" && c === "paper") {
-            alert("You win! Scissors beats paper");
+            message.textContent = "You win! Scissors beats paper";
             playerScore++;
         } else {
-            alert("Tie game!");
+            message.textContent = "Tie game!";
         }
         // reset player choice to "none" for the next round
         p = "none";
@@ -60,13 +86,14 @@ function resetGame() {
     resetBtn.textContent = "Reset Game";
 
     body.appendChild(resetBtn);
+    
     resetBtn.addEventListener('click', () => {
         playerScore = 0;
         computerScore = 0;
         announceWinner.textContent = "";
         runningScore.textContent = `Computer: ${computerScore}, Player: ${playerScore}`;
         body.removeChild(resetBtn);
-        body.removeChild(printOut);
+        printOut.textContent = "";
     });
 }
 
@@ -89,26 +116,6 @@ function game() {
 
 // Start the game when web page opens
 alert("Let's Play!");
-
-
-const buttons = document.querySelectorAll('button');
-const body = document.querySelector('body');
-var printOut = document.createElement('div');
-printOut.classList.add('results');
-printOut.textContent = '';
-body.appendChild(printOut);
-
-
-var runningScore = document.createElement('div');
-runningScore.classList.add('runningScore');
-runningScore.textContent = 
-    `Computer: ${computerScore}, Player: ${playerScore}`;
-body.appendChild(runningScore);
-
-var announceWinner = document.createElement('div');
-announceWinner.classList.add('announceWinner');
-announceWinner.textContent = "";
-body.appendChild(announceWinner);
 
 // add event listener for each button and update playerChoice 
 // according to button clicked
